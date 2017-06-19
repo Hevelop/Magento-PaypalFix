@@ -15,18 +15,11 @@ class Full_PaypalFix_Model_Hostedpro_Request extends Mage_Paypal_Model_Hostedpro
     protected function _getOrderData(Mage_Sales_Model_Order $order)
     {
         $request = array(
-            'subtotal'      => $this->_formatPrice($order->getBaseSubtotal()),
-            'tax'           => $this->_formatPrice($order->getBaseTaxAmount() + $order->getHiddenTaxAmount()),
-            'shipping'      => $this->_formatPrice($order->getBaseShippingAmount()),
+            'subtotal'      => $this->_formatPrice($order->getBaseGrandTotal()),
             'invoice'       => $order->getIncrementId(),
             'address_override' => 'true',
             'currency_code'    => $order->getBaseCurrencyCode(),
             'buyer_email'      => $order->getCustomerEmail(),
-            'discount'         => $this->_formatPrice(
-                $order->getBaseGiftCardsAmount()
-                + abs($order->getBaseDiscountAmount())
-                + $order->getBaseCustomerBalanceAmount()
-            ),
         );
 
         // append to request billing address data
